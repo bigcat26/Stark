@@ -48,10 +48,13 @@ class Corner_Predictor(nn.Module):
         with torch.no_grad():
             self.indice = torch.arange(0, self.feat_sz).view(-1, 1) * self.stride
             # generate mesh-grid
-            self.coord_x = self.indice.repeat((self.feat_sz, 1)) \
-                .view((self.feat_sz * self.feat_sz,)).float().cuda()
-            self.coord_y = self.indice.repeat((1, self.feat_sz)) \
-                .view((self.feat_sz * self.feat_sz,)).float().cuda()
+            coord_x = self.indice.repeat((self.feat_sz, 1)) \
+                .view((self.feat_sz * self.feat_sz,)).float()
+            coord_y = self.indice.repeat((1, self.feat_sz)) \
+                .view((self.feat_sz * self.feat_sz,)).float()
+            # Register as buffer so it automatically moves to the correct device
+            self.register_buffer('coord_x', coord_x)
+            self.register_buffer('coord_y', coord_y)
 
     def forward(self, x, return_dist=False, softmax=True):
         """ Forward pass with input x. """
@@ -115,10 +118,13 @@ class Corner_Predictor_Lite(nn.Module):
         with torch.no_grad():
             self.indice = (torch.arange(0, self.feat_sz).view(-1, 1) + 0.5) * self.stride  # here we can add a 0.5
             # generate mesh-grid
-            self.coord_x = self.indice.repeat((self.feat_sz, 1)) \
-                .view((self.feat_sz * self.feat_sz,)).float().cuda()
-            self.coord_y = self.indice.repeat((1, self.feat_sz)) \
-                .view((self.feat_sz * self.feat_sz,)).float().cuda()
+            coord_x = self.indice.repeat((self.feat_sz, 1)) \
+                .view((self.feat_sz * self.feat_sz,)).float()
+            coord_y = self.indice.repeat((1, self.feat_sz)) \
+                .view((self.feat_sz * self.feat_sz,)).float()
+            # Register as buffer so it automatically moves to the correct device
+            self.register_buffer('coord_x', coord_x)
+            self.register_buffer('coord_y', coord_y)
 
     def forward(self, x, return_dist=False, softmax=True):
         """ Forward pass with input x. """
@@ -171,10 +177,13 @@ class Corner_Predictor_Lite_Rep(nn.Module):
         with torch.no_grad():
             self.indice = (torch.arange(0, self.feat_sz).view(-1, 1) + 0.5) * self.stride  # here we can add a 0.5
             # generate mesh-grid
-            self.coord_x = self.indice.repeat((self.feat_sz, 1)) \
-                .view((self.feat_sz * self.feat_sz,)).float().cuda()
-            self.coord_y = self.indice.repeat((1, self.feat_sz)) \
-                .view((self.feat_sz * self.feat_sz,)).float().cuda()
+            coord_x = self.indice.repeat((self.feat_sz, 1)) \
+                .view((self.feat_sz * self.feat_sz,)).float()
+            coord_y = self.indice.repeat((1, self.feat_sz)) \
+                .view((self.feat_sz * self.feat_sz,)).float()
+            # Register as buffer so it automatically moves to the correct device
+            self.register_buffer('coord_x', coord_x)
+            self.register_buffer('coord_y', coord_y)
 
     def forward(self, x, return_dist=False, softmax=True):
         """ Forward pass with input x. """
@@ -230,10 +239,13 @@ class Corner_Predictor_Lite_Rep_v2(nn.Module):
         with torch.no_grad():
             self.indice = (torch.arange(0, self.feat_sz).view(-1, 1) + 0.5) * self.stride  # here we can add a 0.5
             # generate mesh-grid
-            self.coord_x = self.indice.repeat((self.feat_sz, 1)) \
-                .view((self.feat_sz * self.feat_sz,)).float().cuda()
-            self.coord_y = self.indice.repeat((1, self.feat_sz)) \
-                .view((self.feat_sz * self.feat_sz,)).float().cuda()
+            coord_x = self.indice.repeat((self.feat_sz, 1)) \
+                .view((self.feat_sz * self.feat_sz,)).float()
+            coord_y = self.indice.repeat((1, self.feat_sz)) \
+                .view((self.feat_sz * self.feat_sz,)).float()
+            # Register as buffer so it automatically moves to the correct device
+            self.register_buffer('coord_x', coord_x)
+            self.register_buffer('coord_y', coord_y)
 
     def forward(self, x, return_dist=False, softmax=True):
         """ Forward pass with input x. """
